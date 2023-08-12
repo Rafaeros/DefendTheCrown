@@ -1,86 +1,45 @@
-
 var config = {
   type: Phaser.AUTO,
-  width: 805,
-  height: 835,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 200 }
-    }
-  },
+  width: 700,
+  height: 700,
   scene: {
-    preload: preload,
-    create: create,
-    update: update
+      preload: preload,
+      create: create
   }
 };
 
 var game = new Phaser.Game(config);
-var board;
-var pieces;
-var topPieces;
-var player = true;
+
+let boardSize = 7;
+let tileSize = 100;
+let board = [];
+let topPieces;
+let downPieces;
 let allPieces;
 
 
 function preload() {
-  this.load.image('background', 'assets/background.png');
+  this.load.image('black', 'assets/black.png');
+  this.load.image('white', 'assets/white.png');
 
-  this.load.image('sword-top-1', 'assets/sword-piece.png')
-  this.load.image('sword-top-2', 'assets/sword-piece.png')
-  this.load.image('sword-top-3', 'assets/sword-piece.png')
-  this.load.image('staff-top-1', 'assets/staff-piece.png')
-  this.load.image('staff-top-2', 'assets/staff-piece.png')
-  this.load.image('shield-top', 'assets/shield-piece.png')
-  this.load.image('lance-top-1', 'assets/lance-piece.png')
-  this.load.image('lance-top-2', 'assets/lance-piece.png')
-  this.load.image('crown-top', 'assets/crown-piece.png')
-
-  this.load.image('sword-down-1', 'assets/sword-piece.png')
-  this.load.image('sword-down-2', 'assets/sword-piece.png')
-  this.load.image('sword-down-3', 'assets/sword-piece.png')
-  this.load.image('staff-down-1', 'assets/staff-piece.png')
-  this.load.image('staff-down-2', 'assets/staff-piece.png')
-  this.load.image('shield-down', 'assets/shield-piece.png')
-  this.load.image('lance-down-1', 'assets/lance-piece.png')
-  this.load.image('lance-down-2', 'assets/lance-piece.png')
-  this.load.image('crown-down', 'assets/crown-piece.png')
-
+  this.load.image('sword', 'assets/sword-piece.png')
+  this.load.image('staff', 'assets/staff-piece.png')
+  this.load.image('shield', 'assets/shield-piece.png')
+  this.load.image('lance', 'assets/lance-piece.png')
+  this.load.image('crown', 'assets/crown-piece.png')
 }
 
 function create() {
-  board = this.add.image(390, 360, 'background');
-  const boardWidth = board.width;
-  const boardHeight = board.height;
+  for (var i = 0; i < boardSize; i++) {
+      board[i] = [];
+      for (var j = 0; j < boardSize; j++) {
+          var tileColor = (i + j) % 2 === 0 ? 'black' : 'white';
+          var tile = this.add.image(j * tileSize, i * tileSize, tileColor).setOrigin(0);
+          board[i][j] = { tile: tile, piece: null };
+      }
+  }
+  placePieces.call(this);
 
-  topPieces = this.add.group([
-    this.add.sprite(210, 85, 'sword-top-1'),
-    this.add.sprite(570, 85, 'sword-top-2'),
-    this.add.sprite(390, 270, 'sword-top-3'),
-    this.add.sprite(300, 85, 'staff-top-1'),
-    this.add.sprite(480, 85, 'staff-top-2'),
-    this.add.sprite(390, 180, 'shield-top'),
-    this.add.sprite(300, 180, 'lance-top-1'),
-    this.add.sprite(480, 180, 'lance-top-2'),
-    this.add.sprite(390, 85, 'crown-top')
-  ])
-
-  downPieces = this.add.group([
-    this.add.sprite(210, 635, 'sword-down-1'),
-    this.add.sprite(575, 635, 'sword-down-2'),
-    this.add.sprite(390, 450, 'sword-down-3'),
-    this.add.sprite(300, 635, 'staff-down-1'),
-    this.add.sprite(480, 635, 'staff-down-2'),
-    this.add.sprite(390, 540, 'shield-down'),
-    this.add.sprite(300, 540, 'lance-top-1'),
-    this.add.sprite(480, 540, 'lance-top-2'),
-    this.add.sprite(390, 635, 'crown-down')
-  ])
-
-  allPieces = [topPieces, downPieces];
-
-  // Habilitar interações com o mouse
   allPieces.forEach((pieces) => {
 
     pieces.children.iterate((piece) => {
@@ -92,11 +51,37 @@ function create() {
 
   });
 
-
-  // Habilitar interações com o teclado
+  
   this.input.keyboard.on('keydown', movePiece);
 }
 
+function placePieces() {
+  topPieces = this.add.group([
+    this.add.sprite(1 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2,  'sword'),
+    this.add.sprite(5 * tileSize + tileSize / 2,  0 * tileSize + tileSize / 2,  'sword'),
+    this.add.sprite(3 * tileSize + tileSize / 2,  2 * tileSize + tileSize / 2, 'sword'),
+    this.add.sprite(2 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2,  'staff'),
+    this.add.sprite(4 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2,  'staff'),
+    this.add.sprite(3 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2, 'shield'),
+    this.add.sprite(2 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2,  'lance'),
+    this.add.sprite(4 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2, 'lance'),
+    this.add.sprite(3 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2, 'crown')
+  ])
+
+  downPieces = this.add.group([
+    this.add.sprite(1 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2,  'sword'),
+    this.add.sprite(5 * tileSize + tileSize / 2,  6 * tileSize + tileSize / 2,  'sword'),
+    this.add.sprite(3 * tileSize + tileSize / 2,  4 * tileSize + tileSize / 2, 'sword'),
+    this.add.sprite(2 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2,  'staff'),
+    this.add.sprite(4 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2,  'staff'),
+    this.add.sprite(3 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2, 'shield'),
+    this.add.sprite(2 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2,  'lance'),
+    this.add.sprite(4 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2, 'lance'),
+    this.add.sprite(3 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2, 'crown')
+  ])
+  
+  allPieces = [topPieces, downPieces];
+}
 
 function movePiece(event) {
 
@@ -108,7 +93,7 @@ function movePiece(event) {
         break;
 
       case 'ArrowDown':
-        selectedPiece.y += 92;
+        selectedPiece.y  += 92;
         break;
 
       case 'ArrowLeft':
@@ -120,8 +105,4 @@ function movePiece(event) {
         break;
     }
   }
-}
-
-function update() {
-  // Lógica dos inimigos
 }
