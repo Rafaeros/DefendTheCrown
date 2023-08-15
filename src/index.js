@@ -1,3 +1,5 @@
+import Sword from './pieces/Sword';
+
 var config = {
   type: Phaser.AUTO,
   width: 700,
@@ -51,8 +53,29 @@ function create() {
 
   });
 
+  let selectedPiece = null;
   
+  const movePiece = (event) => {
+
+    const cursorKeys = this.input.keyboard.createCursorKeys();
+    const { x, y } = selectedPiece;
+
+    if (cursorKeys.left.isDown) {
+      selectedPiece.x = Math.max(0, x - tileSize);
+    } else if (cursorKeys.right.isDown) {
+      selectedPiece.x = Math.min((boardSize - 1) * tileSize, x + tileSize);
+    } else if (cursorKeys.up.isDown) {
+      selectedPiece.y = Math.max(0, y - tileSize);
+    } else if (cursorKeys.down.isDown) {
+      selectedPiece.y = Math.min((boardSize - 1) * tileSize, y + tileSize);
+    }
+
+    selectedPiece.x = Math.floor(selectedPiece.x / tileSize) * tileSize + tileSize / 2;
+    selectedPiece.y = Math.floor(selectedPiece.y / tileSize) * tileSize + tileSize / 2;
+  };
+
   this.input.keyboard.on('keydown', movePiece);
+
 }
 
 function placePieces() {
@@ -81,28 +104,6 @@ function placePieces() {
   ])
   
   allPieces = [topPieces, downPieces];
-}
 
-function movePiece(event) {
-
-  if (selectedPiece) {
-
-    switch (event.code) {
-      case 'ArrowUp':
-        selectedPiece.y -= 92;
-        break;
-
-      case 'ArrowDown':
-        selectedPiece.y  += 92;
-        break;
-
-      case 'ArrowLeft':
-        selectedPiece.x -= 90;
-        break;
-
-      case 'ArrowRight':
-        selectedPiece.x += 90;
-        break;
-    }
-  }
+  
 }
