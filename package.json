@@ -10,6 +10,7 @@
     "dev-fb": "webpack serve --config webpack.fb.js"
   },
   "author": "",
+  "type": "module",
   "license": "ISC",
   "dependencies": {
     "phaser": "^3.24.1",
