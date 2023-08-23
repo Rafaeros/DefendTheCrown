@@ -18,6 +18,8 @@ let board = [];
 let topPieces;
 let downPieces;
 let allPieces;
+let player = 0;
+let actualPieces = 0;
 
 
 function preload() {
@@ -32,7 +34,15 @@ function preload() {
 }
 
 function create() {
-  for (var i = 0; i < boardSize; i++) {
+  
+  createBoard.call(this);
+  placePieces.call(this);
+  selectPieces.call(this);
+  
+  }
+
+function createBoard() {
+    for (var i = 0; i < boardSize; i++) {
       board[i] = [];
       for (var j = 0; j < boardSize; j++) {
           var tileColor = (i + j) % 2 === 0 ? 'black' : 'white';
@@ -40,42 +50,43 @@ function create() {
           board[i][j] = { tile: tile, piece: null };
       }
   }
-  placePieces.call(this);
+}
 
+function selectPieces() {
   allPieces.forEach((pieces) => {
-
     pieces.children.iterate((piece) => {
-      piece.setInteractive();
-      piece.on('pointerdown', () => {
-        selectedPiece = piece;
-      })
-    });
-
-  });
-
-  let selectedPiece = null;
+      piece.setInteractive({ draggable: true }); 
   
-  const movePiece = (event) => {
+      piece.on('dragstart', () => {
+        piece.setTint(0xffd700); 
+      });
+  
+      piece.on('drag', (pointer, dragX, dragY) => {
+        piece.x = dragX;
+        piece.y = dragY;
+      });
+  
+      piece.on('dragend', () => {
+        piece.clearTint(); 
+        const newPosition = getBoardPosition(piece.x, piece.y);
+        movePieceToPosition(piece, newPosition);
+      });
+    });
+  });
+}
 
-    const cursorKeys = this.input.keyboard.createCursorKeys();
-    const { x, y } = selectedPiece;
+function getBoardPosition(x, y) {
+  const row = Math.floor(y / tileSize);
+  const col = Math.floor(x / tileSize);
+  return { row, col };
+}
 
-    if (cursorKeys.left.isDown) {
-      selectedPiece.x = Math.max(0, x - tileSize);
-    } else if (cursorKeys.right.isDown) {
-      selectedPiece.x = Math.min((boardSize - 1) * tileSize, x + tileSize);
-    } else if (cursorKeys.up.isDown) {
-      selectedPiece.y = Math.max(0, y - tileSize);
-    } else if (cursorKeys.down.isDown) {
-      selectedPiece.y = Math.min((boardSize - 1) * tileSize, y + tileSize);
-    }
-
-    selectedPiece.x = Math.floor(selectedPiece.x / tileSize) * tileSize + tileSize / 2;
-    selectedPiece.y = Math.floor(selectedPiece.y / tileSize) * tileSize + tileSize / 2;
-  };
-
-  this.input.keyboard.on('keydown', movePiece);
-
+function movePieceToPosition(piece, newPosition) {
+  const { row, col } = newPosition;
+  const newX = col * tileSize + tileSize / 2;
+  const newY = row * tileSize + tileSize / 2;
+  piece.x = newX;
+  piece.y = newY;
 }
 
 function placePieces() {
