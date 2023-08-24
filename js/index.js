@@ -19,7 +19,7 @@ let topPieces;
 let downPieces;
 let allPieces;
 let player = 0;
-let actualPieces = 0;
+let pieces = 0;
 
 
 function preload() {
@@ -38,6 +38,8 @@ function create() {
   createBoard.call(this);
   placePieces.call(this);
   selectPieces.call(this);
+
+  
   
   }
 
@@ -52,13 +54,23 @@ function createBoard() {
   }
 }
 
-function selectPieces() {
-  allPieces.forEach((pieces) => {
+  function selectPieces() {
+    // Remova os eventos de arrastar de todas as peças.
+    allPieces.forEach((pieces) => {
+      pieces.children.iterate((piece) => {
+        piece.removeAllListeners('dragstart');
+        piece.removeAllListeners('drag');
+        piece.removeAllListeners('dragend');
+      });
+    });
+  
+    // Ative os eventos de arrastar apenas para as peças do jogador atual.
+    pieces = player === 0 ? topPieces : downPieces;
     pieces.children.iterate((piece) => {
-      piece.setInteractive({ draggable: true }); 
+      piece.setInteractive({ draggable: true });
   
       piece.on('dragstart', () => {
-        piece.setTint(0xffd700); 
+        piece.setTint(0xffd700);
       });
   
       piece.on('drag', (pointer, dragX, dragY) => {
@@ -67,13 +79,20 @@ function selectPieces() {
       });
   
       piece.on('dragend', () => {
-        piece.clearTint(); 
-        const newPosition = getBoardPosition(piece.x, piece.y);
+        
+        piece.clearTint();
+        const newX = piece.x;
+        const newY = piece.Y;
+        const newPosition = getBoardPosition(newX, newY);
         movePieceToPosition(piece, newPosition);
+        player = 1 - player;
+        selectPieces();
+          
+
+       
       });
     });
-  });
-}
+  }
 
 function getBoardPosition(x, y) {
   const row = Math.floor(y / tileSize);
