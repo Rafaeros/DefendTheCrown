@@ -1,4 +1,9 @@
-class Piece extends Phaser.GameObjects.Sprite {}
+class Piece extends Phaser.GameObjects.Sprite {
+   getPossibleMoves() {
+    moves = [{x: this.x, y: this.y}]
+    return moves;
+  }
+}
 
 export class Crown extends Piece {
   constructor(scene, x, y) {
@@ -18,6 +23,15 @@ export class Sword extends Piece {
   constructor(scene, x, y) {
     super(scene, x, y, 'sword');
     scene.add.existing(this);
+  }
+
+  getPossibleMoves(){
+    moves = [
+      {x: this.x, y: this.y - 1},
+      {x: this.x + 1, y: this.y},
+      {x: this.x - 1, y: this.y}
+    ]
+    return moves;
   }
 }
 
