@@ -67,6 +67,7 @@ function selectPieces() {
 
     piece.on('dragstart', () => {
       piece.setTint(0xffd700);
+      showValidMoves(piece);
     });
 
     piece.on('drag', (pointer, dragX, dragY) => {
@@ -75,16 +76,55 @@ function selectPieces() {
     });
 
     piece.on('dragend', () => {
-
       piece.clearTint();
       const newX = piece.x;
       const newY = piece.y;
       const newPosition = getBoardPosition(newX, newY);
-      movePieceToPosition(piece, newPosition);
-      player = 1 - player;
-      selectPieces();
+      if (isValidMove(piece, newPosition)) {
+        movePieceToPosition(piece, newPosition);
+        player = 1 - player;
+        selectPieces();
+      } else {
+        movePieceToPosition(piece, piece.originalPosition);
+      }
+      hideValidMoves();
+    });
+
+    piece.originalPosition = { row: Math.floor(piece.y / tileSize), col: Math.floor(piece.x / tileSize) };
+  });
+}
+
+function showValidMoves(piece) {
+  piece.allowedMoves.forEach((move) => {
+    const newRow = piece.originalPosition.row + move.row;
+    const newCol = piece.originalPosition.col + move.col;
+    if (newRow >= 0 && newRow < boardSize && newCol >= 0 && newCol < boardSize) {
+      const tile = board[newRow][newCol].tile;
+      const tileColor = tile.texture.key;
+
+      if (tileColor === 'black') {
+        tile.setTint(0x3ee500); 
+      } else if (tileColor === 'white') {
+        tile.setTint(0x04b700);  
+      }
+    }
+  });
+}
+
+function hideValidMoves() {
+  board.forEach((row) => {
+    row.forEach((cell) => {
+      cell.tile.clearTint();
     });
   });
+}
+
+function isValidMove(piece, newPosition) {
+  return piece.allowedMoves.some(
+    (move) =>
+      newPosition.row === piece.originalPosition.row + move.row &&
+      newPosition.col === piece.originalPosition.col + move.col
+  );
 }
 
 function getBoardPosition(x, y) {
@@ -102,27 +142,27 @@ function movePieceToPosition(piece, newPosition) {
 
 function placePieces() {
   topPieces = this.add.group([
-    new Sword(this, 1 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2),
-    new Sword(this, 5 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2),
-    new Sword(this, 3 * tileSize + tileSize / 2, 2 * tileSize + tileSize / 2),
-    new Staff(this, 2 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2),
-    new Staff(this, 4 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2),
-    new Shield(this,3 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2),
-    new Lance(this, 2 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2),
-    new Lance(this, 4 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2),
-    new Crown(this, 3 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2)
+    new Sword(this, 1 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2, 0),
+    new Sword(this, 5 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2, 0),
+    new Sword(this, 3 * tileSize + tileSize / 2, 2 * tileSize + tileSize / 2, 0),
+    new Staff(this, 2 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2, 0),
+    new Staff(this, 4 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2, 0),
+    new Shield(this,3 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2, 0),
+    new Lance(this, 2 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2, 0),
+    new Lance(this, 4 * tileSize + tileSize / 2, 1 * tileSize + tileSize / 2, 0),
+    new Crown(this, 3 * tileSize + tileSize / 2, 0 * tileSize + tileSize / 2, 0)
   ])
 
   downPieces = this.add.group([
-    new Sword(this, 1 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2),
-    new Sword(this, 5 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2),
-    new Sword(this, 3 * tileSize + tileSize / 2, 4 * tileSize + tileSize / 2),
-    new Staff(this, 2 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2),
-    new Staff(this, 4 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2),
-    new Shield(this,3 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2),
-    new Lance(this, 2 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2),
-    new Lance(this, 4 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2),
-    new Crown(this, 3 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2)
+    new Sword(this, 1 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2, 1),
+    new Sword(this, 5 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2, 1),
+    new Sword(this, 3 * tileSize + tileSize / 2, 4 * tileSize + tileSize / 2, 1),
+    new Staff(this, 2 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2, 1),
+    new Staff(this, 4 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2, 1),
+    new Shield(this,3 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2, 1),
+    new Lance(this, 2 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2, 1),
+    new Lance(this, 4 * tileSize + tileSize / 2, 5 * tileSize + tileSize / 2, 1),
+    new Crown(this, 3 * tileSize + tileSize / 2, 6 * tileSize + tileSize / 2, 1)
   ])
 
   allPieces = [topPieces, downPieces];
