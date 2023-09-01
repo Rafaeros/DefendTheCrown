@@ -20,6 +20,7 @@ let downPieces;
 let allPieces;
 let player = 0;
 let pieces = 0;
+let enemyPieces = 0;
 
 
 function preload() {
@@ -62,6 +63,8 @@ function selectPieces() {
   });
 
   pieces = player === 0 ? topPieces : downPieces;
+  enemyPieces = player === 0 ? downPieces : topPieces;
+
   pieces.children.iterate((piece) => {
     piece.setInteractive({ draggable: true });
 
@@ -82,6 +85,7 @@ function selectPieces() {
       const newPosition = getBoardPosition(newX, newY);
       if (isValidMove(piece, newPosition)) {
         movePieceToPosition(piece, newPosition);
+        attack(); 
         player = 1 - player;
         selectPieces();
       } else {
@@ -89,12 +93,12 @@ function selectPieces() {
       }
       hideValidMoves();
     });
-
     piece.originalPosition = { row: Math.floor(piece.y / tileSize), col: Math.floor(piece.x / tileSize) };
   });
 }
 
 function showValidMoves(piece) {
+  piece.
   piece.allowedMoves.forEach((move) => {
     const newRow = piece.originalPosition.row + move.row;
     const newCol = piece.originalPosition.col + move.col;
@@ -110,6 +114,17 @@ function showValidMoves(piece) {
     }
   });
 }
+
+
+function attack(piece, enemyPieces) {
+  piece.possibleAttacks.forEach((attack) => {
+    const newRow = piece.originalPosition.row + attack.row;
+    const newCol = piece.originalPosition.col + attack.col;  
+    
+    
+  })
+}
+
 
 function hideValidMoves() {
   board.forEach((row) => {
@@ -138,7 +153,6 @@ function movePieceToPosition(piece, newPosition) {
   piece.x = col * tileSize + tileSize / 2;
   piece.y = row * tileSize + tileSize / 2;
 }
-
 
 function placePieces() {
   topPieces = this.add.group([

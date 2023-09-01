@@ -7,13 +7,12 @@ class Piece extends Phaser.GameObjects.Sprite {
   }
 }
 
-let direction = 2;
+let direction = 0;
+let possibleAttacks = 0;
 
 export class Crown extends Piece {
-  constructor(scene, x, y, direction) {
-    
-
-    super(scene, x, y, 'crown', [
+  constructor(scene, x, y) {
+    direction = [
       { row: 1, col: 0 }, 
       { row: 0, col: 1 },
       { row: 1, col: 1 },
@@ -22,7 +21,9 @@ export class Crown extends Piece {
       { row: -1, col: -1 },
       { row: -1, col: 0 },
       { row: 0, col: -1 }
-    ]);
+    ]
+    possibleAttacks = direction;
+    super(scene, x, y, 'crown', direction, possibleAttacks);
 
     scene.add.existing(this);
   }
@@ -37,6 +38,11 @@ export class Lance extends Piece {
         { row: 0, col: -1 },
         { row: 0, col: 1 }
       ]
+      possibleAttacks = [
+        {row: 1, col: 0},
+        {row: 2, col: 0}
+      ]
+
     } else if (turn == 1) {
       direction = [
         { row: -1, col: 0 }, 
@@ -44,8 +50,12 @@ export class Lance extends Piece {
         { row: 0, col: -1 },
         { row: 0, col: 1 }
       ]
+      possibleAttacks = [
+        {row: -1, col: 0},
+        {row: -2, col: 0}
+      ]
     }
-    super(scene, x, y, 'lance', direction);
+    super(scene, x, y, 'lance', direction, possibleAttacks);
     scene.add.existing(this);
   }
 }
@@ -58,14 +68,21 @@ export class Sword extends Piece {
         { row: 0, col: -1 },
         { row: 0, col: 1 },
       ]
+      possibleAttacks = [
+        {row: 1, col: 0}
+      ]
+
     } else if (turn == 1) {
       direction =[
         { row: -1, col: 0 }, 
         { row: 0, col: -1 },
         { row: 0, col: 1 },
       ]
+      possibleAttacks = [
+        {row: -1, col: 0}
+      ]
     }
-    super(scene, x, y, 'sword', direction);
+    super(scene, x, y, 'sword', direction, possibleAttacks);
     scene.add.existing(this);
   }
 }
