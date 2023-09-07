@@ -1,6 +1,57 @@
+body{
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 100vh;
+    background-color: antiquewhite;
+    overflow: hidden;
+}
 
-* {
-    background-color: rgb(0, 0, 0);
-    margin-left: 10%;
-    margin-right: 10%;
+#game-menu{
+    border: 1px solid orang;
+    width: 40rem;
+    height: 40rem;
+    background-color: orange;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.game-menu-name{
+    display: flex;
+    margin-top: 2rem;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+    
+}
+.game-menu-name p{
+    padding: 0;
+    color: aliceblue;
+    font-size: xxx-large;
+    font-weight: 600;
+}
+
+.game-menu-botoes{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.game-menu-botoes a{
+    padding: 1.5rem;
+    margin-top: 1rem;
+    font-size: xx-large;
+    font-weight: 500;
+    text-decoration: none;
+    border: 0.02rem solid none;
+    border-radius: 25px;
+    color: whitesmoke;
+    box-shadow: 0.2 0.2 0.2 0.2 aliceblue;
+}
+
+.game-menu-botoes a:hover{
+    background-color: #6bdea5;
 }

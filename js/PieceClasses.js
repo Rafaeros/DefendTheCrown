@@ -1,13 +1,12 @@
 class Piece extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, key, allowedMoves, allowedInteractions, instance, player, life, previousRow, previousCol) {
+  constructor(scene, x, y, key, allowedMoves, allowedInteractions, instance, player, life) {
     super(scene, x, y, key);
     this.allowedMoves = allowedMoves;
     this.allowedInteractions = allowedInteractions;
     this.player = player;
     this.life = life;
     this.instance = instance;
-    this.previousRow = previousRow;
-    this.previousCol = previousCol;
+
   }
 }
 

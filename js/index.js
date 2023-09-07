@@ -15,7 +15,6 @@ var config = {
 
 var game = new Phaser.Game(config);
 
-let boardSize = 7;
 let tileSize = 100;
 let board = [];
 let topPieces;
@@ -24,6 +23,7 @@ let allPieces;
 let player = 0;
 let pieces = 0;
 let text = '';
+let button = '';
 
 function preload() {
   this.load.image('black', 'assets/black.png');
@@ -45,13 +45,11 @@ function preload() {
 
 function create() {
   this.add.rectangle(0, 0, 900, 900, 0x0).setOrigin(0, 0);
-  
-  
+
   createBoard.call(this);
   placePieces.call(this);
   selectPieces.call(this);
-  text = this.add.text(160, 425, '', { fontSize: '45px', fontStyle: 'bold'});
-  text.setStroke('#000', 5)
+  createText.call(this);
 }
 
 function createBoard() {
@@ -90,7 +88,7 @@ function selectPieces() {
       piece.setInteractive({ draggable: true });
 
       piece.on("dragstart", () => {
-        piece.setTint(0xffd700);
+        piece.setTint(0x808080);
         showMoves(piece);
         showInteractions(piece);
       });
@@ -108,8 +106,8 @@ function selectPieces() {
 
         if (isValidMove(piece, newPosition)) {
           hideInteractions(piece);
-          movePiece(piece, newPosition);
-          
+          movePiece(piece, newPosition); 
+          board[piece.originalPosition.row][piece.originalPosition.col].occupied = false;      
           player = 1 - player;
           selectPieces();
         } else {
@@ -123,6 +121,7 @@ function selectPieces() {
       };
     });
   } else {
+    button.setVisible(true);
     allPieces.forEach((pieces) => {
       pieces.children.iterate((piece) => {
         piece.removeAllListeners('dragstart');
@@ -130,11 +129,12 @@ function selectPieces() {
         piece.removeAllListeners('dragend');
       });
     });
-    if (thereIsCrown(topPieces) == false) {
-      text.setText('O JOGADOR AZUL GANHOU!');
-    } else {
+    if (thereIsCrown(topPieces) === false) {
       text.setText('O JOGADOR ROXO GANHOU!');
+    } else if (thereIsCrown(downPieces) === false){
+      text.setText('O JOGADOR AZUL GANHOU!');
     }
+    button.setVisible(true);
   }
 }
 
@@ -206,39 +206,45 @@ function isValidMove(piece, newPosition) {
   }
 
   if (board[row][col].occupied) {
+    hideInteractions(piece);
+    interact(piece, targetPiece);
     if (piece.instance !== "shield" && targetPiece.player !== piece.player) {
-      hideInteractions(piece);
-      if (targetPiece.life > 1) {
-        interact(piece, targetPiece);
+      if (targetPiece.life === 0) {
+
+        return piece.allowedInteractions.some(
+          (move) =>
+            row === piece.originalPosition.row + move.rowA &&
+            col === piece.originalPosition.col + move.colA
+        );
+      } else if (targetPiece.life === 1) {
+        player = 1 - player;
+        selectPieces();
         return false;
-      } else {
-      return piece.allowedInteractions.some((move) =>
-        row === piece.originalPosition.row + move.rowA && col === piece.originalPosition.col + move.colA
-      );
       }
     } else if (piece.instance === "shield" && targetPiece.player === piece.player) {
       hideInteractions(piece);
-      return piece.allowedInteractions.some((move) =>
-        row === piece.originalPosition.row + move.rowA && col === piece.originalPosition.col + move.colA
+      return piece.allowedInteractions.some(
+        (move) =>
+          row === piece.originalPosition.row + move.rowA &&
+          col === piece.originalPosition.col + move.colA
       );
     }
     return false;
   } else {
-    return piece.allowedMoves.some((move) =>
-      row === piece.originalPosition.row + move.row && col === piece.originalPosition.col + move.col
+    return piece.allowedMoves.some(
+      (move) =>
+        row === piece.originalPosition.row + move.row &&
+        col === piece.originalPosition.col + move.col
     );
   }
 }
 
 function movePiece(piece, newPosition) {
   const { row, col } = newPosition;
-  let targetPiece = board[row][col].piece;
-
   piece.x = col * tileSize + tileSize / 2;
   piece.y = row * tileSize + tileSize / 2;
   board[row][col].piece = piece;
   board[row][col].occupied = true;
-  
 }
 
 function getPosition(x, y) {
@@ -251,16 +257,16 @@ function interact(piece, targetPiece) {
   if (piece.instance !== "shield") {
     if (targetPiece.player !== piece.player) {
       if (interactionRange(piece, targetPiece)) {
-        targetPiece.life -= 1;
-        if (targetPiece.life == 0) {
+        targetPiece.life -= 1; 
+        if (targetPiece.life === 0) {
           targetPiece.destroy();
-        }
+        } 
       }
     }
   } else if (piece.instance === "shield") {
     if (targetPiece.player === piece.player) {
-      
       if (interactionRange(piece, targetPiece)) {
+        piece.destroy();
         targetPiece.life += 1;
         piece.destroy();
       }
@@ -326,4 +332,19 @@ function placePieces() {
 
   allPieces = [topPieces, downPieces];
 
+}
+
+function createText() {
+  text = this.add.text(160, 375, '', { fontSize: '45px', fontStyle: 'bold'});
+  text.setStroke('#000', 5)
+
+  button = this.add.text(450, 450, 'Retornar para tela inicial', { fontSize: '25px', fill: '#fff' }).setOrigin(0.5)
+  .setPadding(10)
+  .setStyle({ backgroundColor: '#ffa500' }).setInteractive({ useHandCursor: true })
+  .on('pointerover', () => button.setStyle({ backgroundColor: '#6bdea5' }))
+  .on('pointerout', () => button.setStyle({ backgroundColor: '#ffa500'})).setVisible(false);
+
+  button.on('pointerdown', () => {
+    window.location.href = 'index.html';
+  });
 }
