@@ -1,3 +1,6 @@
+// Quando a vida da peça inimiga for 2, a peça selecionada volta para sua posição original
+// Problema com movePiece, pois a peça originalPosition já está com a nova posição 
+
 import { Crown, Lance, Staff, Sword, Shield } from './PieceClasses.js';
 
 var config = {
@@ -20,24 +23,35 @@ let downPieces;
 let allPieces;
 let player = 0;
 let pieces = 0;
+let text = '';
 
 function preload() {
   this.load.image('black', 'assets/black.png');
   this.load.image('white', 'assets/white.png');
   this.load.image('red', 'assets/background.png');
-  this.load.image('sword', 'assets/top-pieces/sword-piece2.png')
-  this.load.image('staff', 'assets/staff-piece.png')
-  this.load.image('shield', 'assets/shield-piece.png')
-  this.load.image('lance', 'assets/lance-piece.png')
-  this.load.image('crown', 'assets/crown-piece.png')
+
+  this.load.image('top-sword', 'assets/top-pieces/sword-piece.png')
+  this.load.image('top-staff', 'assets/top-pieces/staff-piece.png')
+  this.load.image('top-shield', 'assets/top-pieces/shield-piece.png')
+  this.load.image('top-lance', 'assets/top-pieces/lance-piece.png')
+  this.load.image('top-crown', 'assets/top-pieces/crown-piece.png')
+
+  this.load.image('down-sword', 'assets/down-pieces/sword-piece.png')
+  this.load.image('down-staff', 'assets/down-pieces/staff-piece.png')
+  this.load.image('down-shield','assets/down-pieces/shield-piece.png')
+  this.load.image('down-lance', 'assets/down-pieces/lance-piece.png')
+  this.load.image('down-crown', 'assets/down-pieces/crown-piece.png')
 }
 
 function create() {
   this.add.rectangle(0, 0, 900, 900, 0x0).setOrigin(0, 0);
   
+  
   createBoard.call(this);
   placePieces.call(this);
   selectPieces.call(this);
+  text = this.add.text(160, 425, '', { fontSize: '45px', fontStyle: 'bold'});
+  text.setStroke('#000', 5)
 }
 
 function createBoard() {
@@ -62,7 +76,6 @@ function createBoard() {
 }
 
 function selectPieces() {
-  
   if (isPlaying()) {
     allPieces.forEach((pieces) => {
       pieces.children.iterate((piece) => {
@@ -96,16 +109,12 @@ function selectPieces() {
         if (isValidMove(piece, newPosition)) {
           hideInteractions(piece);
           movePiece(piece, newPosition);
-
-          board[piece.originalPosition.row][
-            piece.originalPosition.col
-          ].occupied = false;
+          
           player = 1 - player;
           selectPieces();
         } else {
           movePiece(piece, piece.originalPosition);
         }
-
         hideMoves();
       });
       piece.originalPosition = {
@@ -119,11 +128,13 @@ function selectPieces() {
         piece.removeAllListeners('dragstart');
         piece.removeAllListeners('drag');
         piece.removeAllListeners('dragend');
-        
       });
     });
-    console.log("O jogo acabou");
-    game.add.text(0, 0, 'O jogo acabou', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+    if (thereIsCrown(topPieces) == false) {
+      text.setText('O JOGADOR AZUL GANHOU!');
+    } else {
+      text.setText('O JOGADOR ROXO GANHOU!');
+    }
   }
 }
 
@@ -131,15 +142,13 @@ function isPlaying() {
   if (thereIsCrown(topPieces) && thereIsCrown(downPieces)) {
     return true;
   }
-
   return false;
 }
 
 function thereIsCrown(groupPiece) {
-  const crownExists = groupPiece.children.entries.some((piece) => piece.texture.key === "crown");
+  const crownExists = groupPiece.children.entries.some((piece) => piece.instance === "crown");
   return crownExists;
 }
-
 
 function showMoves(piece) {
   piece.allowedMoves.forEach((move) => {
@@ -148,11 +157,10 @@ function showMoves(piece) {
     if (newRow > 1 || newRow < 7 ||  newCol > 1 ||  newCol < 7) {
       const tile = board[newRow][newCol].tile;
       const tileColor = tile.texture.key;
-
       if (tileColor === 'black') {
-        tile.setTint(0x3ee500);
+        tile.setTint(0x2cfa02);
       } else if (tileColor === 'white') {
-        tile.setTint(0x04b700);
+        tile.setTint(0x1fa105);
       }
     }
   });  
@@ -161,8 +169,7 @@ function showMoves(piece) {
 function showInteractions(piece) {
   const enemyPieces = player === 0 ? downPieces : topPieces;
   const allyPieces = player === 0 ? topPieces : downPieces;
-
-  if (piece.texture.key !== "shield") {
+  if (piece.instance !== "shield") {
     enemyPieces.children.iterate((enemyPiece) => {
       if (enemyPiece.player !== piece.player) {
         if (interactionRange(piece, enemyPiece)) {
@@ -170,7 +177,7 @@ function showInteractions(piece) {
         }
       }
     });
-  } else if (piece.texture.key === "shield") {
+  } else if (piece.instance === "shield") {
     allyPieces.children.iterate((allyPiece) => {
       if (allyPiece.player === piece.player) {
         if (interactionRange(piece, allyPiece)) {
@@ -183,7 +190,6 @@ function showInteractions(piece) {
 
 function interactionRange(piece, targetPiece) {
   const { row, col } = getPosition(targetPiece.x, targetPiece.y);
-
   return piece.allowedInteractions.some(
     (interaction) =>
       row === piece.originalPosition.row + interaction.rowA &&
@@ -200,11 +206,18 @@ function isValidMove(piece, newPosition) {
   }
 
   if (board[row][col].occupied) {
-    if (piece.texture.key !== "shield" && targetPiece.player !== piece.player) {
+    if (piece.instance !== "shield" && targetPiece.player !== piece.player) {
+      hideInteractions(piece);
+      if (targetPiece.life > 1) {
+        interact(piece, targetPiece);
+        return false;
+      } else {
       return piece.allowedInteractions.some((move) =>
         row === piece.originalPosition.row + move.rowA && col === piece.originalPosition.col + move.colA
       );
-    } else if (piece.texture.key === "shield" && targetPiece.player === piece.player) {
+      }
+    } else if (piece.instance === "shield" && targetPiece.player === piece.player) {
+      hideInteractions(piece);
       return piece.allowedInteractions.some((move) =>
         row === piece.originalPosition.row + move.rowA && col === piece.originalPosition.col + move.colA
       );
@@ -221,14 +234,11 @@ function movePiece(piece, newPosition) {
   const { row, col } = newPosition;
   let targetPiece = board[row][col].piece;
 
-  if (board[row][col].occupied) {
-    interact(piece, targetPiece);
-  }
-
   piece.x = col * tileSize + tileSize / 2;
   piece.y = row * tileSize + tileSize / 2;
   board[row][col].piece = piece;
   board[row][col].occupied = true;
+  
 }
 
 function getPosition(x, y) {
@@ -238,18 +248,18 @@ function getPosition(x, y) {
 }
 
 function interact(piece, targetPiece) {
-  if (piece.texture.key !== "shield") {
+  if (piece.instance !== "shield") {
     if (targetPiece.player !== piece.player) {
       if (interactionRange(piece, targetPiece)) {
         targetPiece.life -= 1;
         if (targetPiece.life == 0) {
           targetPiece.destroy();
-
         }
       }
     }
-  } else if (piece.texture.key === "shield") {
+  } else if (piece.instance === "shield") {
     if (targetPiece.player === piece.player) {
+      
       if (interactionRange(piece, targetPiece)) {
         targetPiece.life += 1;
         piece.destroy();
@@ -259,11 +269,11 @@ function interact(piece, targetPiece) {
 }
 
 function hideInteractions(piece) {
-  if (piece.texture.key !== 'shield') {
+  if (piece.instance !== 'shield') {
     const targetPieces = player === 0 ? downPieces : topPieces;
     targetPieces.children.iterate((target) => target.clearTint());
     
-  } else if (piece.texture.key == 'shield') {
+  } else if (piece.instance === 'shield') {
     const targetPieces = player === 0 ? topPieces : downPieces;
     targetPieces.children.iterate((target) => target.clearTint());
   }
