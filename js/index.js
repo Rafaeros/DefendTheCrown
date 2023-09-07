@@ -25,7 +25,7 @@ function preload() {
   this.load.image('black', 'assets/black.png');
   this.load.image('white', 'assets/white.png');
   this.load.image('red', 'assets/background.png');
-  this.load.image('sword', 'assets/sword-piece.png')
+  this.load.image('sword', 'assets/top-pieces/sword-piece2.png')
   this.load.image('staff', 'assets/staff-piece.png')
   this.load.image('shield', 'assets/shield-piece.png')
   this.load.image('lance', 'assets/lance-piece.png')
@@ -114,17 +114,29 @@ function selectPieces() {
       };
     });
   } else {
-
-    
+    allPieces.forEach((pieces) => {
+      pieces.children.iterate((piece) => {
+        piece.removeAllListeners('dragstart');
+        piece.removeAllListeners('drag');
+        piece.removeAllListeners('dragend');
+        
+      });
+    });
+    console.log("O jogo acabou");
+    game.add.text(0, 0, 'O jogo acabou', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
   }
 }
 
 function isPlaying() {
-  const currentPlayerPieces = player === 0 ? topPieces.children.entries : downPieces.children.entries;
-  
-  // Verifica se a coroa do jogador atual está presente no tabuleiro
-  const crownExists = currentPlayerPieces.some((piece) => piece.texture.key === "crown");
+  if (thereIsCrown(topPieces) && thereIsCrown(downPieces)) {
+    return true;
+  }
 
+  return false;
+}
+
+function thereIsCrown(groupPiece) {
+  const crownExists = groupPiece.children.entries.some((piece) => piece.texture.key === "crown");
   return crownExists;
 }
 
