@@ -1,57 +1,66 @@
-body{
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: 100vh;
-    background-color: antiquewhite;
-    overflow: hidden;
+body {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: 100vh;
+  background-color: antiquewhite;
+  overflow: hidden;
 }
 
-#game-menu{
-    border: 1px solid orang;
-    width: 40rem;
-    height: 40rem;
-    background-color: orange;
-    text-align: center;
-    border-radius: 25px;
+#game-menu {
+  border: 1px solid orang;
+  width: 40rem;
+  height: 40rem;
+  background-color: orange;
+  text-align: center;
+  border-radius: 25px;
 }
 
-.game-menu-name{
-    display: flex;
-    margin-top: 2rem;
-    align-items: center;
-    justify-content: center;
-    height: 20rem;
-    
-}
-.game-menu-name p{
-    padding: 0;
-    color: aliceblue;
-    font-size: xxx-large;
-    font-weight: 600;
+#game-menu header p {
+  padding: 0;
+  color: aliceblue;
+  font-size: xxx-large;
+  font-weight: 600;
+  margin: 2rem;
 }
 
-.game-menu-botoes{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+#game-menu header img {
+  margin-top: 2rem;
+  width: 20rem;
+  height: 15rem;
 }
 
-.game-menu-botoes a{
-    padding: 1.5rem;
-    margin-top: 1rem;
-    font-size: xx-large;
-    font-weight: 500;
-    text-decoration: none;
-    border: 0.02rem solid none;
-    border-radius: 25px;
-    color: whitesmoke;
-    box-shadow: 0.2 0.2 0.2 0.2 aliceblue;
+.game-menu-botoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.game-menu-botoes a:hover{
-    background-color: #6bdea5;
+.game-menu-botoes a {
+  padding: 1.5rem;
+  margin-top: 0.5rem;
+  font-size: xx-large;
+  font-weight: 500;
+  text-decoration: none;
+  border: 0.02rem solid #e25e3e;
+  border-radius: 25px;
+  color: whitesmoke;
+  box-shadow: 0.2rem 0.2rem 0.3rem #c63d2f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-menu-botoes a:hover {
+  background-color: #6bdea5;
+  text-decoration: underline;
+}
+
+.game-menu-botoes img {
+  width: 2.5rem;
+  height: 2rem;
+  margin-left: 0.4rem;
 }
