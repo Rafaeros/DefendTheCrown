@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <title>Defend The Crown</title>
+</head>
+
+<body class="rules">
+    <div class="rule-container">
+        <a href="index.html"><button class="return-button"> <i class="fi fi-rs-undo"></i><span>Retornar para página principal</span></button></a>
+        <div class="rule-item">
+            <h1>Regras do jogo</h1>
+        </div>
+        <div class="rule-item">
+            <h2>— Peças (Quantidade por jogador)</h2>
+            <ul>
+                <li>Coroa (1)[Co]</li>
+                <li>Espada (3)[Ep]</li>
+                <li>Sabre Duplo (2)[Sd]</li>
+                <li>Lança (2)[L]</li>
+                <li>Alabarda (1)[A]</li>
+                <li>Cajado (2)[Ca]</li>
+                <li>Grimório (1)[G]</li>
+                <li>Escudo (2)[Ec]</li>
+            </ul>
+        </div>
+        <hr>
+        <div class="rule-item">
+            <h2>— Montando o tabuleiro</h2>
+            <p>O tabuleiro tem um formato de quadrado de 7 casas por 7 casas, sem cada casa ocupada apenas por uma peça,
+                com exceção do escudo, que é a única peça que pode compartilhar uma casa com outra peça*.</p>
+            <div class="rule-flex">
+                <img src="./img/board.PNG" alt="">
+            </div>
+            <small>*Obs.: Não é possível um escudo ser colocado juntamente com outro escudo. Ou eles ficam sozinhos na
+                casa, ou sob outra peça.</small>
+        </div>
+        <hr>
+        <div class="rule-item">
+            <h2>— Combate</h2>
+            <p>A movimentação da peça é baseada em um sistema de ataque-movimento, primeiro realiza o ataque no alcance
+                máximo da peça ou no alcance desejado pelo jogador e, somente depois, realiza a movimentação. Caso o
+                ataque seja suficiente para derrotar a peça inimiga, a peça que realizou o ataque se desloca para a
+                exata posição da peça derrotada, caso não seja o suficiente para a derrota, a peça atacante se desloca
+                até a casa logo em frente da peça inimiga.</p>
+            <div class="rule-subitem">
+                <h3>Ex: Lança versus Cajado com escudo</h3>
+                <div class="rule-flex">
+                    <img src="./img/spear-staff-1.PNG" alt="">
+                </div>
+                <p>A Lança, como será mostrado na próxima seção, pode se mover 2 casas para frente ou 1 casa para o
+                    lado, e pode atacar até duas casas para frente, portanto, a Cajado + Escudo está no alcance da
+                    Lança. </p>
+                <div class="rule-flex">
+                    <img src="./img/spear-staff-2.PNG" alt="">
+                </div>
+                <p>A Lança tenta um ataque no Cajado + Escudo, mas por conta da regra do escudo, o Cajado permanece no
+                    lugar, e o escudo morre em seu lugar. Sabendo que não há ataque sem movimentação, a Lança precisa se
+                    deslocar até a posição mais próxima da casa onde ela atacou, ficando assim, na casa em frente ao
+                    Cajado. E essa regra do ataque-movimentação é aplicado para todas as peças, portanto, caso o ataque
+                    não mate a peça inimiga, a peça atacante deve parar em frente ou ao lado da casa atacada.
+                </p>
+                <div class="rule-flex">
+                    <img src="./img/spear-staff-3.PNG" alt="">
+                </div>
+            </div>
+            <div class="rule-subitem">
+                <h3>Ex: Lança versus Cajado</h3>
+                <div class="rule-flex">
+                    <img src="./img/spear-staff-4.PNG" alt="">
+                </div>
+                <p>Neste caso, o Cajado não possui Escudo, então quando a Lança realiza o ataque, o Cajado é morto e a
+                    Lança avança para casa ocupada pelo Cajado. </p>
+                <div class="rule-flex">
+                    <img src="./img/spear-staff-5.PNG" alt="">
+                </div>
+                <p>Assim que o Cajado é morto, sua peça vai para a mão do jogar que a matou (jogabilidade melhor
+                    explicada posteriormente).</p>
+            </div>
+        </div>
+        <hr>
+        <div class="rule-item">
+            <h2>— Movimentações</h2>
+            <img src="./img/m1.PNG" alt="" style="margin-bottom: -1em;">
+            <div class="rule-subitem text-center">
+                <h3>Coroa</h3>
+                <ul>
+                    <li>Pode se deslocar para qualquer direção em apenas uma casa.</li>
+                    <li>Pode atacar em qualquer direção em apenas uma casa.</li>
+                </ul>
+
+                <div class="rule-flex">
+                    <img src="./img/m2.PNG" alt="">
+                </div>
+            </div>
+            <div class="rule-subitem text-center">
+                <h3>Espada</h3>
+                <ul>
+                    <li>Pode se deslocar apenas uma casa para frente ou para um dos lados ou uma para trás.</li>
+                    <li>Pode atacar apenas uma casa para frente.</li>
+                </ul>
+                <div class="rule-flex">
+                    <img src="./img/m3.PNG" alt="">
+                </div>
+            </div>
+            <div class="rule-subitem text-center">
+                <h3>Lança</h3>
+                <ul>
+                    <li>Pode se deslocar até 2 casas para frente ou 1 casa para um dos lados ou uma casa para trás.</li>
+                    <li>Pode atacar até 2 casas para frente. Caso haja duas peças uma atrás da outra. A lança só
+                        consegue atacar a peça mais perto. <br> Não podendo atacar a peça de trás sem passar pela
+                        primeira.</li>
+                </ul>
+                <div class="rule-flex">
+                    <img src="./img/m4.PNG" alt="">
+                </div>
+            </div>
+            <div class="rule-subitem text-center">
+                <h3>Cajado</h3>
+                <ul>
+                    <li>Pode se deslocar em todas as direções em uma casa.</li>
+                    <li>Pode atacar em todas as direções em um arco ao entorno das casas de movimentação. <br> Não
+                        podendo atacar nas casas onde a peça pode se movimentar. (exemplificado na tabela abaixo)</li>
+                </ul>
+                <div class="rule-flex">
+                    <img src="./img/m5.PNG" alt="">
+                </div>
+            </div>
+            <div class="rule-subitem text-center">
+                <h3>Escudo</h3>
+                <ul>
+                    <li>Pode se deslocar em todas as direções.</li>
+                    <li>Não pode realizar ataque algum, mas pode se juntar a alguma outra peça e a proteger</li>
+                </ul>
+                <div class="rule-flex">
+                    <img src="./img/m5.PNG" alt="">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="rule-item">
+            <h2>— Condição de Derrota</h2>
+            <p>Existem apenas 3 casos para ser declarado o fim do jogo.
+                <ol>
+                    <li>
+                        <b><h3>Desistência</h3></b>
+                        <p>A qualquer momento do jogo após o primeiro movimento, um dos jogadores pode desistir da partida, causando assim sua derrota automaticamente.</p>
+                    </li>
+                    <li>
+                        <b><h3>Morte da Coroa</h3></b>
+                        <p>Durante a partida, se a Coroa receber um ataque que a elimine do tabuleiro, o jogador que perde a Coroa é considerado derrotado.</p>
+                    </li>
+                    <li>
+                        <b><h3>Perda de todas as peças</h3></b>
+                        <p>Durante a partida, se um jogador perder todas as peças do tabuleiro, exceto a Coroa, é considerado derrotado.</p>
+                    </li>
+                </ol>
+        </div>
+        <hr>
+        <div class="rule-item">
+            <h2>— Evolução das Peças</h2>
+            <p>A condição para ocorrer uma evolução é possuir 3 peças iguais (é contabilizado da seguinte forma: uma peça no tabuleiro + 2 peças na mão do jogador). Ou chegando no final do tabuleiro do lado inimigo.</p>
+            <p>Para ganhar peças na mão, o jogador deve ir eliminando peças inimigas, ou sacrificar uma peça aliada usando o Grimório.</p>
+            <p>Quando um jogador possui 3 peças iguais, ele pode escolher quando evoluir uma peça, se assim o fizer, as 3 peças saem permanentemente da partida e a versão evoluída da peça entra na casa onde a peça que gasta na evolução estava. A evolução gasta uma jogada, ou seja, não poderá realizar nenhuma movimentação ou ataque antes ou depois da evolução.</p>
+        </div>
+    </div>
+</body>
+
+</html>
