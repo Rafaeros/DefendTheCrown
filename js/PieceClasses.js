@@ -126,14 +126,6 @@ export class Staff extends Piece {
       { row: 0, col: -1 }
     ];
     allowedInteractions = [
-      { rowA: 1, colA: 0 }, 
-      { rowA: 0, colA: 1 },
-      { rowA: 1, colA: 1 },
-      { rowA: 1, colA: -1 },
-      { rowA: -1, colA: 1 },
-      { rowA: -1, colA: -1 },
-      { rowA: -1, colA: 0 },
-      { rowA: 0, colA: -1 },
       { rowA: 0, colA: 2},
       { rowA: 1, colA: 2},
       { rowA: -1, colA: 2},
