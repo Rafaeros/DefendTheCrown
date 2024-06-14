@@ -1,0 +1,154 @@
+* {
+    padding: 0;
+    margin: 0;
+    height: auto;
+}
+
+body {
+    background-image: url('/assets/img/background.png');
+    height: 100vh;
+}
+
+.rule-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 1rem 0 2rem;
+}
+
+.rule-item {
+    width: 60%;
+    border: .2rem solid #ffffff;
+    border-radius: 15px;
+    padding: 1.2rem;
+    background-color: #583aff;
+}
+
+.rule-item h1 {
+    font-family: "Raleway", sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    padding-bottom: 1rem;
+}
+
+.rule-item .subtitle {
+    color: white;
+    text-transform: uppercase;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+details>summary {
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none
+}
+
+summary::after {
+    content: ' ►';
+    font-size: 1.2rem;
+    margin-right: .9rem;
+    padding: .2rem .3rem;
+}
+
+details[open] summary:after {
+    content: " ▼";
+}
+
+.rule-item-container {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    margin-top: 1rem;
+}
+
+.rule-item-container h1 {
+    text-transform: uppercase;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.rule-item-container h1::before {
+    content: "";
+    display: inline-block;
+    height: 0.1em;
+    vertical-align: middle;
+    width: 30%;
+    margin-right: 20px;
+    border-top: 2px solid rgb(0, 0, 0);
+}
+
+.rule-item-container h1::after {
+    content: "";
+    display: inline-block;
+    height: 0.1em;
+    vertical-align: middle;
+    width: 30%;
+    margin-left: 20px;
+    border-top: 2px solid rgb(0, 0, 0);
+}
+
+.rule-item-container p {
+    text-indent: 2rem;
+}
+
+.rule-item img {
+    margin: .5rem 0;
+}
+
+.image-center {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.rule-subitem {
+    margin-top: 1rem;
+}
+
+.rule-item-container li {
+    margin-top: 1rem;
+}
+
+.rule-subitem ul li {
+    list-style: none !important;
+}
+
+i {
+    margin-right: .5em;
+}
+
+.return-button {
+    position: fixed;
+    background: #583aff;
+    border: .2rem solid #ffffff;
+    color: #ffffff;
+    border-radius: 1em;
+    padding: 1em 1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    top: 1%;
+    left: 1%;
+}
+
+
+.return-button:hover {
+    background: #735cf5;
+    color: white;
+}
