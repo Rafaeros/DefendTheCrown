@@ -2,8 +2,13 @@ import { Crown, Lance, Staff, Sword, Shield } from './PieceClasses.js';
 
 var config = {
   type: Phaser.AUTO,
-  width: 760,
-  height: 760,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autocenter: Phaser.Scale.CENTER_BOTH,
+    width: 760,
+    height: 760,
+    parent: 'gameScreen',
+  },
   scene: {
     preload: preload,
     create: create
@@ -38,16 +43,15 @@ function preload() {
   this.load.image('down-shield','../../assets/pieces/down-pieces/shield-piece.png')
   this.load.image('down-lance', '../../assets/pieces/down-pieces/lance-piece.png')
   this.load.image('down-crown', '../../assets/pieces/down-pieces/crown-piece.png')
-
 }
 
 function create() {
   this.add.rectangle(0, 0, 900, 900, 0x0).setOrigin(0, 0);
-
   createBoard.call(this);
   placePieces.call(this);
   selectPieces.call(this);
   createText.call(this);
+  createHeader.call(this);
 }
 
 function createBoard() {
@@ -345,4 +349,59 @@ function createText() {
   button.on('pointerdown', () => {
     window.location.href = 'index.html';
   });
+}
+
+function createHeader() {
+
+  var gameTime = 0;
+
+  // Cria um texto para exibir as informações dos jogadores e do tempo
+  var headerRec = this.add.rectangle(427, 50, 665, 100, 0x583aff)
+  headerRec.setStrokeStyle(3, 0xffffff)
+
+
+  const textStyle = {
+    fontFamily: 'Arial',
+    fontSize: 24,
+    color: '#ffffff',
+    padding: {x: 15, y: 15},
+    backgroundColor: '#000000',
+    align: 'center',
+  }
+
+  var player1Text = this.add.text(0, 0, 'Jogador Roxo', textStyle);
+  var player2Text = this.add.text(0, 0, 'Jogador Azul', textStyle);
+  var gameTimerText = this.add.text(0, 0, 'Tempo: 00:00', textStyle);
+
+  player1Text.setY(headerRec.y - player1Text.height / 2);
+  gameTimerText.setY(headerRec.y - gameTimerText.height / 2);
+  player2Text.setY(headerRec.y - gameTimerText.height / 2);
+
+  const totalTextWidth = player1Text.width + gameTimerText.width + player2Text.width;
+  const spaceBetween = (headerRec.width - totalTextWidth) / 4;
+
+  player1Text.setX(headerRec.x - headerRec.width / 2 + spaceBetween)
+  gameTimerText.setX(headerRec.x - headerRec.width / 2 + player1Text.width + 2 * spaceBetween)
+  player2Text.setX(headerRec.x - headerRec.width / 2 + player1Text.width + gameTimerText.width + 3 * spaceBetween)
+
+  gameTimer = this.time.addEvent({
+    delay: 1000,
+    callback: updateHeader,
+    callbackScope: this,
+    loop: true,
+  });
+
+  function updateHeader(){
+    gameTime+=1;
+
+    const minutes = Math.floor(gameTime / 60);
+    const seconds = gameTime % 60;
+    const formattedTimer = `${twoDecimals(minutes)}:${twoDecimals(seconds)}`;
+
+    gameTimerText.setText('Tempo: '+ formattedTimer);
+  }
+
+  function twoDecimals(num){
+    return num < 10 ? '0' + num : num;
+  }
 }
