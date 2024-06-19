@@ -16,7 +16,6 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
-
 let tileSize = 95;
 let board = [];
 let topPieces;
@@ -353,6 +352,7 @@ function createText() {
 
 function createHeader() {
 
+  var gameTimerCallback;
   var gameTime = 0;
 
   // Cria um texto para exibir as informações dos jogadores e do tempo
@@ -384,7 +384,7 @@ function createHeader() {
   gameTimerText.setX(headerRec.x - headerRec.width / 2 + player1Text.width + 2 * spaceBetween)
   player2Text.setX(headerRec.x - headerRec.width / 2 + player1Text.width + gameTimerText.width + 3 * spaceBetween)
 
-  gameTimer = this.time.addEvent({
+  gameTimerCallback = this.time.addEvent({
     delay: 1000,
     callback: updateHeader,
     callbackScope: this,
@@ -393,12 +393,22 @@ function createHeader() {
 
   function updateHeader(){
     gameTime+=1;
-
+    changePlayers();
     const minutes = Math.floor(gameTime / 60);
     const seconds = gameTime % 60;
     const formattedTimer = `${twoDecimals(minutes)}:${twoDecimals(seconds)}`;
 
     gameTimerText.setText('Tempo: '+ formattedTimer);
+  }
+
+  function changePlayers(){
+    if(player===0){
+      player2Text.setStyle({backgroundColor: '#1CCBC6'});
+      player1Text.setStyle(textStyle);
+    }else{
+      player1Text.setStyle({backgroundColor: '#7225C8'});
+      player2Text.setStyle(textStyle);
+    }
   }
 
   function twoDecimals(num){
