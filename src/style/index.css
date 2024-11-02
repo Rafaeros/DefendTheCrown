@@ -6,13 +6,13 @@
 }
 
 body {
+    background-image: url('../assets/img/background.png');
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     width: auto;
     height: 100vh;
-    background-image: url('../assets/img/background.png')
 }
 
 #game-menu {

@@ -27,21 +27,21 @@ let text = '';
 let button = '';
 
 function preload() {
-  this.load.image('black', '../../assets/pieces/black.png');
-  this.load.image('white', '../../assets/pieces/white.png');
-  this.load.image('red', '../../assets/pieces/background.png');
+  this.load.image('black', '../assets/pieces/black.png');
+  this.load.image('white', '../assets/pieces/white.png');
+  this.load.image('red', '../assets/pieces/background.png');
 
-  this.load.image('top-sword', '../../assets/pieces/top-pieces/sword-piece.png')
-  this.load.image('top-staff', '../../assets/pieces/top-pieces/staff-piece.png')
-  this.load.image('top-shield', '../../assets/pieces/top-pieces/shield-piece.png')
-  this.load.image('top-lance', '../../assets/pieces/top-pieces/lance-piece.png')
-  this.load.image('top-crown', '../../assets/pieces/top-pieces/crown-piece.png')
+  this.load.image('top-sword', '../assets/pieces/top-pieces/sword-piece.png')
+  this.load.image('top-staff', '../assets/pieces/top-pieces/staff-piece.png')
+  this.load.image('top-shield', '../assets/pieces/top-pieces/shield-piece.png')
+  this.load.image('top-lance', '../assets/pieces/top-pieces/lance-piece.png')
+  this.load.image('top-crown', '../assets/pieces/top-pieces/crown-piece.png')
 
-  this.load.image('down-sword', '../../assets/pieces//down-pieces/sword-piece.png')
-  this.load.image('down-staff', '../../assets/pieces/down-pieces/staff-piece.png')
-  this.load.image('down-shield','../../assets/pieces/down-pieces/shield-piece.png')
-  this.load.image('down-lance', '../../assets/pieces/down-pieces/lance-piece.png')
-  this.load.image('down-crown', '../../assets/pieces/down-pieces/crown-piece.png')
+  this.load.image('down-sword', '../assets/pieces//down-pieces/sword-piece.png')
+  this.load.image('down-staff', '../assets/pieces/down-pieces/staff-piece.png')
+  this.load.image('down-shield','../assets/pieces/down-pieces/shield-piece.png')
+  this.load.image('down-lance', '../assets/pieces/down-pieces/lance-piece.png')
+  this.load.image('down-crown', '../assets/pieces/down-pieces/crown-piece.png')
 }
 
 function create() {
