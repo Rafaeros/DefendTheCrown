@@ -12,7 +12,7 @@ body {
     justify-content: center;
     width: auto;
     height: 100vh;
-    background-image: url('/assets/img/background.png')
+    background-image: url('../assets/img/background.png')
 }
 
 #game-menu {
