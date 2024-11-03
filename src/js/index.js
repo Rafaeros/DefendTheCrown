@@ -25,23 +25,24 @@ let player = 0;
 let pieces = 0;
 let text = '';
 let button = '';
+const piecesPath = '../../assets/pieces';
 
 function preload() {
-  this.load.image('black', '../assets/pieces/black.png');
-  this.load.image('white', '../assets/pieces/white.png');
-  this.load.image('red', '../assets/pieces/background.png');
+  this.load.image('black', `${piecesPath}/black.png`);
+  this.load.image('white', `${piecesPath}/white.png`);
+  this.load.image('red', `${piecesPath}/background.png`);
 
-  this.load.image('top-sword', '../assets/pieces/top-pieces/sword-piece.png')
-  this.load.image('top-staff', '../assets/pieces/top-pieces/staff-piece.png')
-  this.load.image('top-shield', '../assets/pieces/top-pieces/shield-piece.png')
-  this.load.image('top-lance', '../assets/pieces/top-pieces/lance-piece.png')
-  this.load.image('top-crown', '../assets/pieces/top-pieces/crown-piece.png')
+  this.load.image('top-sword', `${piecesPath}/top-pieces/sword-piece.png`)
+  this.load.image('top-staff', `${piecesPath}/top-pieces/staff-piece.png`)
+  this.load.image('top-shield', `${piecesPath}/top-pieces/shield-piece.png`)
+  this.load.image('top-lance', `${piecesPath}/top-pieces/lance-piece.png`)
+  this.load.image('top-crown', `${piecesPath}/top-pieces/crown-piece.png`)
 
-  this.load.image('down-sword', '../assets/pieces//down-pieces/sword-piece.png')
-  this.load.image('down-staff', '../assets/pieces/down-pieces/staff-piece.png')
-  this.load.image('down-shield','../assets/pieces/down-pieces/shield-piece.png')
-  this.load.image('down-lance', '../assets/pieces/down-pieces/lance-piece.png')
-  this.load.image('down-crown', '../assets/pieces/down-pieces/crown-piece.png')
+  this.load.image('down-sword', `${piecesPath}/down-pieces/sword-piece.png`)
+  this.load.image('down-staff', `${piecesPath}/down-pieces/staff-piece.png`)
+  this.load.image('down-shield', `${piecesPath}/down-pieces/shield-piece.png`)
+  this.load.image('down-lance', `${piecesPath}/down-pieces/lance-piece.png`)
+  this.load.image('down-crown', `${piecesPath}/down-pieces/crown-piece.png`)
 }
 
 function create() {

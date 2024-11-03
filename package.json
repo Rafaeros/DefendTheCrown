@@ -15,6 +15,7 @@
   "dependencies": {
     "countapi-js": "^1.0.2",
     "phaser": "^3.24.1",
+    "phaser-webpack-boilerplate": "file:",
     "webpack-merge": "^5.1.4"
   },
   "devDependencies": {
