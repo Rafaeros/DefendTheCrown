@@ -12,6 +12,7 @@ Bem-vindo ao **Defend the Crown**! Um jogo de estratégia e defesa feito com [Ph
 
 - Acesse o website do [Jogo](http://140.238.239.164/?authuser=1)
 - Acesse a página de informações caso queira saber mais por trás do jogo [Sobre](https://apps.unifil.tech/posts/defend_the_crown/)
+- Github Pages [Pages](https://rafaeros.github.io/DefendTheCrown/)
  
 ## 🕹️ Controles
 
