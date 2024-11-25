@@ -25,10 +25,11 @@ let player = 0;
 let pieces = 0;
 let text = '';
 let button = '';
-const piecesPath = '../../assets/pieces';
 
 function preload() {
-  this.load.image('black', `../../assets/pieces/black.png`);
+  const piecesPath = '/DefendTheCrown/assets/pieces';
+
+  this.load.image('black', `${piecesPath}/black.png`);
   this.load.image('white', `${piecesPath}/white.png`);
   this.load.image('red', `${piecesPath}/background.png`);
 
