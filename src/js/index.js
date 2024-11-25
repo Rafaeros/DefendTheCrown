@@ -25,7 +25,8 @@ let player = 0;
 let pieces = 0;
 let text = '';
 let button = '';
-const piecesPath = '/assets/pieces';
+const piecesPath = 'https://github.com/Rafaeros/DefendTheCrown/blob/0275b88f67c36d0b31d94f7480c6b8f06f18e363/assets/pieces';
+
 
 function preload() {
   this.load.image('black', `${piecesPath}/black.png`);
