@@ -25,7 +25,7 @@ let player = 0;
 let pieces = 0;
 let text = '';
 let button = '';
-const piecesPath = '../../assets/pieces';
+const piecesPath = '/assets/pieces';
 
 function preload() {
   this.load.image('black', `${piecesPath}/black.png`);
