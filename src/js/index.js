@@ -25,11 +25,10 @@ let player = 0;
 let pieces = 0;
 let text = '';
 let button = '';
-const piecesPath = 'https://github.com/Rafaeros/DefendTheCrown/blob/0275b88f67c36d0b31d94f7480c6b8f06f18e363/assets/pieces';
-
+const piecesPath = '../../assets/pieces';
 
 function preload() {
-  this.load.image('black', `${piecesPath}/black.png`);
+  this.load.image('black', `../../assets/pieces/black.png`);
   this.load.image('white', `${piecesPath}/white.png`);
   this.load.image('red', `${piecesPath}/background.png`);
 
